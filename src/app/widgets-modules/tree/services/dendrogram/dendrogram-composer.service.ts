@@ -72,8 +72,13 @@ export class DendrogramComposerService {
       .enter()
       .append('path')
       .transition()
-      .delay(200)
-      .duration(200)
+      .duration(500)
+      .style('opacity', 0)
+      .transition()
+      .delay(500)
+      .text('3.0.0pre')
+      .transition()
+      .style('opacity', 1)
       .attr('d', (d: any) => {
         return (
           'M' +
@@ -125,9 +130,11 @@ export class DendrogramComposerService {
   ) {
     g.append('circle')
       .attr('r', 0)
-      .style('fill', '#367099')
+      .style('fill', '#fff')
+      .style('stroke', 'steelblue')
+      .style('stroke', 'steelblue')
       .style('cursor', 'pointer')
-      .style('stroke-width', 2)
+      .style('stroke-width', 3)
       .transition()
       .delay((d: any, i: number) => i * 100)
       .duration(500)
@@ -175,5 +182,9 @@ export class DendrogramComposerService {
     g.on('click', (d: HierarchyNode<HierarchyNode<TreeSubejct>>) =>
       alert(d.data.data.name)
     );
+
+    g.on('mouseover', () => {
+      console.log(2);
+    });
   }
 }
