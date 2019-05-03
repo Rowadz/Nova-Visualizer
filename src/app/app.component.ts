@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterConf } from './config/models/router-conf.model';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  ngOnInit(): void {}
+  mainLinks: Array<RouterConf>;
+  ngOnInit(): void {
+    this.mainLinks = [
+      {
+        name: 'الخطة الشجرية',
+        routerLink: 'tree',
+        routerLinkActive: 'active',
+        icon: 'school'
+      }
+    ];
+  }
 }

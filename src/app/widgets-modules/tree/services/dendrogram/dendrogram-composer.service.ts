@@ -198,8 +198,11 @@ export class DendrogramComposerService {
       {}
     >
   ): void {
-    g.on('click', (d: HierarchyNode<HierarchyNode<TreeSubejct>>) =>
-      this.events.next({ type: 'click', data: d.data.data })
+    g.on(
+      'click',
+      (d: HierarchyNode<HierarchyNode<TreeSubejct>>) =>
+        d.data.data.cid !== '000000' &&
+        this.events.next({ type: 'click', data: d.data.data })
     );
 
     g.on('mouseover', (d: HierarchyNode<HierarchyNode<TreeSubejct>>) => {

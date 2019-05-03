@@ -8,8 +8,12 @@ import {
   MatIconModule,
   MatSnackBarModule
 } from '@angular/material';
+import { ActionButtonComponent } from './action-button/action-button.component';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
+  imports: [CommonModule, MatIconModule, MatButtonModule, RouterModule],
   exports: [
     MatButtonModule,
     MatSidenavModule,
@@ -17,7 +21,9 @@ import {
     MatListModule,
     MatRippleModule,
     MatIconModule,
-    MatSnackBarModule
-  ]
+    MatSnackBarModule,
+    ActionButtonComponent
+  ],
+  declarations: [ActionButtonComponent]
 })
 export class MatModule {}

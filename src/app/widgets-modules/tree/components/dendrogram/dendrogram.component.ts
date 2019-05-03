@@ -17,7 +17,6 @@ import { RouterConf } from 'src/app/config/models/router-conf.model';
   providers: [DendrogramComposerService]
 })
 export class DendrogramComponent implements OnInit {
-  mainLinks: Array<RouterConf>;
   constructor(
     private readonly dendrogramComposer: DendrogramComposerService,
     private readonly snackBar: MatSnackBar,
@@ -26,14 +25,6 @@ export class DendrogramComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.mainLinks = [
-      {
-        name: 'الخطة الشجرية',
-        routerLink: 'tree',
-        routerLinkActive: 'active',
-        icon: 'school'
-      }
-    ];
     this.dendrogramComposer.initSvg();
     setTimeout(() => this.toast('حرك عجل الفأرة', 'اوك'), 0);
     this.subToEvents();
