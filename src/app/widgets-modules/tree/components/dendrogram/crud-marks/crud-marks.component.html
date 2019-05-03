@@ -1,0 +1,17 @@
+<h3 dir='rtl'>
+  خيارات بخصوص مادة
+  {{  data.name }}
+</h3>
+<mat-list dir='rtl'>
+  <mat-list-item matRipple (click)="openMarkEditor()">
+    ضيف \ ضيفي علامتك
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item matRipple>
+    بدلها \ بدليها بمادة بديلة
+  </mat-list-item>
+  <mat-divider></mat-divider>
+  <mat-list-item (click)="close()" matRipple>
+    كنت بجرب بس
+  </mat-list-item>
+</mat-list>

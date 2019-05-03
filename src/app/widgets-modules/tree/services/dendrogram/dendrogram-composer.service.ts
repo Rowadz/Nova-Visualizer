@@ -13,6 +13,7 @@ import {
 import { TreeSubejct } from 'src/app/config/models/tree-subject.model';
 import { CS2012 } from 'src/app/config/tree-subjects/cs-2012.config';
 import { Subject } from 'rxjs';
+import { DBService } from 'src/app/services/db.service';
 
 export interface DendrogramEvents {
   type: 'click' | 'mouseOver';
@@ -22,7 +23,7 @@ export interface DendrogramEvents {
 @Injectable()
 export class DendrogramComposerService {
   events: Subject<DendrogramEvents>;
-  constructor() {
+  constructor(private readonly DB: DBService) {
     this.events = new Subject<DendrogramEvents>();
   }
 
@@ -48,7 +49,7 @@ export class DendrogramComposerService {
     this.transform(clust, maing);
   }
 
-  private transform(
+  private async transform(
     clust: ClusterLayout<any>,
     maing: Selection<SVGGElement, {}, HTMLElement, any>
   ) {

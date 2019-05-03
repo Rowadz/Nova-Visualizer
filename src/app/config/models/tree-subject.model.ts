@@ -5,4 +5,5 @@ export interface TreeSubejct {
   lvl: 1 | 2 | 3 | 4;
   dependsOn?: Array<string>;
   optional?: true;
+  mark?: number;
 }
