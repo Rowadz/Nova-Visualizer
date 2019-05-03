@@ -12,15 +12,24 @@ import {
 } from 'd3';
 import { TreeSubejct } from 'src/app/config/models/tree-subject.model';
 import { CS2012 } from 'src/app/config/tree-subjects/cs-2012.config';
+import { Subject } from 'rxjs';
+
+export interface DendrogramEvents {
+  type: 'click' | 'mouseOver';
+  data: TreeSubejct;
+}
 
 @Injectable()
 export class DendrogramComposerService {
-  constructor() {}
+  events: Subject<DendrogramEvents>;
+  constructor() {
+    this.events = new Subject<DendrogramEvents>();
+  }
 
   initSvg(): void {
     const width = window.innerWidth;
     const height = window.innerHeight;
-    const start = select('svg');
+    const start = select('svg').style('cursor', 'grab');
     const zoomG = start
       .attr('width', width)
       .attr('height', height)
@@ -31,7 +40,10 @@ export class DendrogramComposerService {
       })
     );
 
-    const maing = zoomG.append('g').attr('transform', 'translate(0, 0)');
+    const maing = zoomG
+      .append('g')
+      .attr('transform', 'translate(0, 0)')
+      .style('cursor', 'default');
     const clust: ClusterLayout<any> = cluster().size([height, width - 100]);
     this.transform(clust, maing);
   }
@@ -180,11 +192,11 @@ export class DendrogramComposerService {
     >
   ): void {
     g.on('click', (d: HierarchyNode<HierarchyNode<TreeSubejct>>) =>
-      alert(d.data.data.name)
+      this.events.next({ type: 'click', data: d.data.data })
     );
 
-    g.on('mouseover', () => {
-      console.log(2);
+    g.on('mouseover', (d: HierarchyNode<HierarchyNode<TreeSubejct>>) => {
+      this.events.next({ type: 'mouseOver', data: d.data.data });
     });
   }
 }
