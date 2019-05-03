@@ -10,6 +10,10 @@ const routes: Routes = [
   {
     path: 'tree',
     loadChildren: './widgets-modules/tree/tree.module#TreeModule'
+  },
+  {
+    path: 'pie',
+    loadChildren: './widgets-modules/pie/pie.module#PieModule'
   }
 ];
 

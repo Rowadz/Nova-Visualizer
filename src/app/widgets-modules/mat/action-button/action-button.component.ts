@@ -13,8 +13,9 @@ export class ActionButtonComponent implements OnInit {
   fabTogglerState = 'inactive';
   constructor() {
     this.fabButtons = [
+      { icon: 'edit', route: '', color: 'warn' },
       { icon: 'school', route: 'tree', color: 'primary' },
-      { icon: 'pie_chart', route: '', color: 'primary' }
+      { icon: 'pie_chart', route: 'pie', color: 'primary' }
     ];
     this.buttons = [];
   }

@@ -16,8 +16,7 @@
   - Allow the user to select a node (subject) and `CRUD` THE MARK ✅
   - Allow the user to mark a subject as `out the final score` ❌
 - Represeting the marks as
-  - Pie Chart ❌
-  - Donut chart ❌
+  - Donut chart ✅
   - Histogram Chart ❌
   - Bubble Chart ❌
   - Density plot ❌
