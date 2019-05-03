@@ -6,4 +6,5 @@ export interface TreeSubejct {
   dependsOn?: Array<string>;
   optional?: true;
   mark?: number;
+  credit?: number;
 }
