@@ -6,10 +6,12 @@ import { TreeSubejct } from '../config/models/tree-subject.model';
   providedIn: 'root'
 })
 export class DBService {
-  private readonly DB: SubjectsDB;
-  constructor() {
-    this.DB = new SubjectsDB();
+  private DB: SubjectsDB;
+  set dbName(name: string) {
+    this.DB = new SubjectsDB(name);
   }
+
+  constructor() {}
 
   save(d: TreeSubejct): Promise<number> {
     return this.DB.save(d);
@@ -17,5 +19,9 @@ export class DBService {
 
   get(id: any): Promise<TreeSubejct | undefined> {
     return this.DB.get(id);
+  }
+
+  getAll(): Promise<Array<TreeSubejct>> {
+    return this.DB.getAll();
   }
 }

@@ -1,6 +1,6 @@
 <mat-grid-list cols="2" rowHeight="2:1">
   <mat-grid-tile>
-    <button mat-fab color="primary" routerLink="/tree/CS2012">
+    <button mat-fab color="primary" routerLink="/tree" (click)="db('CS2012')">
       <mat-icon>add</mat-icon>
     </button>
     <h1>
@@ -8,7 +8,7 @@
     </h1>
   </mat-grid-tile>
   <mat-grid-tile>
-    <button mat-fab color="primary">
+    <button mat-fab color="primary" routerLink="/tree" (click)="db('CS2017')">
       <mat-icon>add</mat-icon>
     </button>
     <h1>
@@ -16,7 +16,7 @@
     </h1>
   </mat-grid-tile>
   <mat-grid-tile>
-    <button mat-fab color="warn">
+    <button mat-fab color="warn" (click)="db('SE2012')">
       <mat-icon>add</mat-icon>
     </button>
     <h1>
@@ -24,7 +24,7 @@
     </h1>
   </mat-grid-tile>
   <mat-grid-tile>
-    <button mat-fab color="accent">
+    <button mat-fab color="accent" (click)="db('WE2018')">
       <mat-icon>add</mat-icon>
     </button>
     <h1>

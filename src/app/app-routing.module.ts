@@ -8,7 +8,7 @@ const routes: Routes = [
     component: HomeComponent
   },
   {
-    path: 'tree/:type',
+    path: 'tree',
     loadChildren: './widgets-modules/tree/tree.module#TreeModule'
   }
 ];

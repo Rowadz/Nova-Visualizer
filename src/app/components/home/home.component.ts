@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NotifierService, dbNames } from 'src/app/services/notifier.service';
 
 @Component({
   selector: 'app-home',
@@ -6,10 +7,12 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
+  constructor(private readonly notifierService: NotifierService) {}
 
-  constructor() { }
+  ngOnInit(): void {}
 
-  ngOnInit() {
+  db(db: dbNames): void {
+    localStorage.setItem('db', db);
+    this.notifierService.selectedDB = db;
   }
-
 }

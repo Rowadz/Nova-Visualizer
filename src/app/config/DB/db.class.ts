@@ -2,21 +2,21 @@ import Dexie from 'dexie';
 import { TreeSubejct } from '../models/tree-subject.model';
 
 export class SubjectsDB extends Dexie {
-  subjects: Dexie.Table<TreeSubejct, number>;
+  subject: Dexie.Table<TreeSubejct, number>;
 
-  constructor() {
-    super('SubjectsDB');
+  constructor(name: string) {
+    super(name);
     this.version(1).stores({
-      subjects: '&cid, name, lvl, dependsOn, optional, mark'
+      [name]: '&cid, name, lvl, dependsOn, optional, mark'
     });
-    this.subjects = this.table('subjects');
+    this.subject = this.table(name);
   }
 
   async save(d: TreeSubejct): Promise<number> {
     if (await this.checkIfExists(d.cid)) {
-      return this.subjects.put(d);
+      return this.subject.put(d);
     } else {
-      return this.subjects.add(d);
+      return this.subject.add(d);
     }
   }
 
@@ -24,7 +24,11 @@ export class SubjectsDB extends Dexie {
     return this.checkIfExists(id);
   }
 
+  async getAll(): Promise<Array<TreeSubejct>> {
+    return this.subject.toArray();
+  }
+
   private async checkIfExists(id: any): Promise<TreeSubejct | undefined> {
-    return this.subjects.get(id);
+    return this.subject.get(id);
   }
 }

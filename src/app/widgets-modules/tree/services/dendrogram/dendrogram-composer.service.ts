@@ -11,9 +11,9 @@ import {
   Selection
 } from 'd3';
 import { TreeSubejct } from 'src/app/config/models/tree-subject.model';
-import { CS2012 } from 'src/app/config/tree-subjects/cs-2012.config';
 import { Subject } from 'rxjs';
 import { DBService } from 'src/app/services/db.service';
+import { NotifierService } from 'src/app/services/notifier.service';
 
 export interface DendrogramEvents {
   type: 'click' | 'mouseOver';
@@ -23,11 +23,15 @@ export interface DendrogramEvents {
 @Injectable()
 export class DendrogramComposerService {
   events: Subject<DendrogramEvents>;
-  constructor(private readonly DB: DBService) {
+  private subjects: Array<TreeSubejct>;
+  constructor(
+    private readonly DB: DBService,
+    private readonly notifier: NotifierService
+  ) {
     this.events = new Subject<DendrogramEvents>();
   }
 
-  initSvg(): void {
+  async initSvg(): Promise<void> {
     const width = window.innerWidth;
     const height = window.innerHeight;
     const start = select('svg').style('cursor', 'grab');
@@ -40,6 +44,9 @@ export class DendrogramComposerService {
         zoomG.attr('transform', event.transform);
       })
     );
+
+    this.DB.dbName = this.notifier.selectedDB;
+    this.mergeDBDataWithSubject(await this.DB.getAll());
 
     const maing = zoomG
       .append('g')
@@ -65,7 +72,7 @@ export class DendrogramComposerService {
         } else {
           return undefined;
         }
-      })([{ cid: '000000', lvl: 1, name: '' }, ...CS2012]);
+      })([{ cid: '000000', lvl: 1, name: '' }, ...this.subjects]);
     const root = hierarchy<HierarchyNode<TreeSubejct>>(
       treeData,
       (d: HierarchyNode<TreeSubejct>) => d.children
@@ -142,19 +149,18 @@ export class DendrogramComposerService {
     >
   ) {
     g.append('circle')
-      .attr('r', 0)
-      .style('fill', '#fff')
-      .style('stroke', 'steelblue')
+      .attr('r', d => (this.getMark(d) ? 5 : 1))
+      .style('fill', d => (this.getMark(d) ? '#011826' : '#fff'))
       .style('stroke', 'steelblue')
       .style('cursor', 'pointer')
-      .style('stroke-width', 3)
+      .style('stroke-width', d => (this.getMark(d) ? 1 : 3))
       .transition()
-      .delay((d: any, i: number) => i * 100)
-      .duration(500)
+      .delay((d: any, i: number) => (this.getMark(d) ? 0 : i * 100))
+      .duration((d, i) => (this.getMark(d) ? 0 : 500))
       .attr('r', 100)
       .style('opacity', 0.4)
       .transition()
-      .duration(500)
+      .duration((d, i) => (this.getMark(d) ? 0 : 500))
       .attr('r', 5)
       .style('opacity', 1)
       .attr('class', 'node');
@@ -199,5 +205,23 @@ export class DendrogramComposerService {
     g.on('mouseover', (d: HierarchyNode<HierarchyNode<TreeSubejct>>) => {
       this.events.next({ type: 'mouseOver', data: d.data.data });
     });
+  }
+
+  private mergeDBDataWithSubject(d: Array<TreeSubejct>) {
+    this.subjects = this.notifier.giveSubject();
+    const cids = d.map(({ cid }: TreeSubejct) => cid);
+    this.subjects.forEach((ts: TreeSubejct, i: number) => {
+      if (cids.includes(ts.cid)) {
+        this.subjects[i] = {
+          ...d.find(({ cid }: TreeSubejct) => cid === ts.cid)
+        };
+      }
+    });
+  }
+
+  private getMark(
+    d: HierarchyNode<HierarchyNode<TreeSubejct>>
+  ): number | undefined {
+    return d.data.data.mark;
   }
 }

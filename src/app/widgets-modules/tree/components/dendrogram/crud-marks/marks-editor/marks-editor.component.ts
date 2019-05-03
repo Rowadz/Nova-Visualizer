@@ -48,6 +48,7 @@ export class MarksEditorComponent implements OnInit {
   }
 
   save(): void {
+    this.DB.dbName = this.notifierService.selectedDB;
     this.DB.save({
       ...this.data,
       ...this.markForm.value
