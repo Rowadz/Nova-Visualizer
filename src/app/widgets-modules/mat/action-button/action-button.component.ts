@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { speedDialFabAnimations } from './action-button.animation';
+import { NotifierService } from 'src/app/services/notifier.service';
 
 @Component({
   selector: 'app-action-button',
@@ -11,7 +12,8 @@ export class ActionButtonComponent implements OnInit {
   fabButtons: Array<FloatingButtons>;
   buttons: Array<FloatingButtons>;
   fabTogglerState = 'inactive';
-  constructor() {
+
+  constructor(public readonly notifierService: NotifierService) {
     this.fabButtons = [
       { icon: 'edit', route: '', color: 'accent' },
       { icon: 'school', route: 'tree', color: 'primary' },

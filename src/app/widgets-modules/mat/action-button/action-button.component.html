@@ -1,3 +1,4 @@
+<ng-container *ngIf="notifierService.selectedDB">
   <div id="fab-dismiss" *ngIf="fabTogglerState === 'active'" (click)="onToggleFab()"></div>
 
   <div class="fab-container">
@@ -14,3 +15,5 @@
       </button>
     </div>
   </div>
+
+</ng-container>
