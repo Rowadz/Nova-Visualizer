@@ -1,10 +1,10 @@
 <ng-container *ngIf="notifierService.selectedDB">
   <div id="fab-dismiss" *ngIf="fabTogglerState === 'active'" (click)="onToggleFab()"></div>
 
-  <div class="fab-container">
+  <div class="fab-container" [ngStyle]="sty">
     <button mat-fab class="fab-toggler" (click)="onToggleFab()">
       <mat-icon [@fabToggler]="{ value: fabTogglerState }" class="white-text">
-        dashboard
+         {{ type === 'navigate1'  ? 'group_work' : 'dashboard'  }}
       </mat-icon>
     </button>
     <div [@speedDialStagger]="buttons.length">

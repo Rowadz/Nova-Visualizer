@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { speedDialFabAnimations } from './action-button.animation';
 import { NotifierService } from 'src/app/services/notifier.service';
 
@@ -9,23 +9,31 @@ import { NotifierService } from 'src/app/services/notifier.service';
   animations: speedDialFabAnimations
 })
 export class ActionButtonComponent implements OnInit {
+  @Input() sty: object;
+  @Input() type: 'navigate1' | 'navigate2' = 'navigate1';
+
   fabButtons: Array<FloatingButtons>;
   buttons: Array<FloatingButtons>;
   fabTogglerState = 'inactive';
 
   constructor(public readonly notifierService: NotifierService) {
-    this.fabButtons = [
-      { icon: 'edit', route: '', color: 'accent' },
-      { icon: 'school', route: 'tree', color: 'primary' },
-      { icon: 'pie_chart', route: 'pie', color: 'primary' },
-      { icon: 'translate', route: 'wordcloud', color: 'primary' },
-      { icon: 'signal_cellular_alt', route: 'column', color: 'primary' },
-      { icon: 'scatter_plot', route: 'packed-bubble', color: 'primary' }
-    ];
     this.buttons = [];
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.type === 'navigate1') {
+      this.fabButtons = [
+        { icon: 'edit', route: '', color: 'accent' },
+        { icon: 'school', route: 'tree', color: 'primary' },
+        { icon: 'pie_chart', route: 'pie', color: 'primary' },
+        { icon: 'translate', route: 'wordcloud', color: 'primary' },
+        { icon: 'signal_cellular_alt', route: 'column', color: 'primary' },
+        { icon: 'scatter_plot', route: 'packed-bubble', color: 'primary' }
+      ];
+    } else {
+      this.fabButtons = [{ icon: 'edit', route: '', color: 'accent' }];
+    }
+  }
 
   showItems(): void {
     this.fabTogglerState = 'active';
