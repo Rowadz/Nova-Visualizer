@@ -41,6 +41,27 @@ export class PieService {
         animation: true,
         ...this.threeDOptions(seriesType, true)
       },
+      responsive: {
+        rules: [
+          {
+            condition: {
+              maxWidth: 500
+            },
+            chartOptions: {
+              plotOptions: {
+                pie: {
+                  dataLabels: {
+                    enabled: seriesType === '3d'
+                  }
+                }
+              },
+              legend: {
+                enabled: false
+              }
+            }
+          } as Highcharts.ResponsiveRulesOptions
+        ]
+      },
       credits: {
         enabled: false
       },

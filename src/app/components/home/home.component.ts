@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NotifierService, dbNames } from 'src/app/services/notifier.service';
 
 @Component({
   selector: 'app-home',
@@ -7,12 +6,48 @@ import { NotifierService, dbNames } from 'src/app/services/notifier.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  constructor(private readonly notifierService: NotifierService) {}
+  myStyle = {};
+  myParams: any;
 
-  ngOnInit(): void {}
+  constructor() {}
 
-  db(db: dbNames): void {
-    localStorage.setItem('db', db);
-    this.notifierService.selectedDB = db;
+  ngOnInit(): void {
+    this.setAttr();
+    this.setStyle();
+  }
+
+  private setStyle(): void {
+    this.myStyle = {
+      position: 'fixed',
+      width: '100%',
+      height: '100%',
+      'z-index': -1,
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0
+    };
+  }
+
+  private setAttr(): void {
+    this.myParams = {
+      particles: {
+        number: {
+          value: 100
+        },
+        color: {
+          value: '#000'
+        },
+        shape: {
+          type: 'circle'
+        },
+        line_linked: {
+          enable: true,
+          distance: 300,
+          color: '#000',
+          opacity: 1
+        }
+      }
+    };
   }
 }

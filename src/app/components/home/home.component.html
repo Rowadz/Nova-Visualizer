@@ -1,34 +1,13 @@
-<mat-grid-list cols="2" rowHeight="2:1">
-  <mat-grid-tile>
-    <button mat-fab color="primary" routerLink="/tree" (click)="db('CS2012')">
-      <mat-icon>add</mat-icon>
-    </button>
-    <h1>
-      علــم الحاســوبـ 2012
-    </h1>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <button mat-fab color="primary" routerLink="/tree" (click)="db('CS2017')">
-      <mat-icon>add</mat-icon>
-    </button>
-    <h1>
-      علــم الحاســوبـ 2017
-    </h1>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <button mat-fab color="warn" routerLink="/tree" (click)="db('SE2012')">
-      <mat-icon>add</mat-icon>
-    </button>
-    <h1>
-      هندسة البرمجياتـ 2012
-    </h1>
-  </mat-grid-tile>
-  <mat-grid-tile>
-    <button mat-fab color="accent" routerLink="/tree" (click)="db('WE2017')">
-      <mat-icon>add</mat-icon>
-    </button>
-    <h1>
-      هندسة الويب 2018
-    </h1>
-  </mat-grid-tile>
-</mat-grid-list>
+<section class="container min-vh-100">
+  <particles [params]="myParams" [style]="myStyle"></particles>
+  <div class="row min-vh-100">
+    <div class="col-12  my-auto text-center">
+      <h1>
+        نوفا راسم البيانات
+      </h1>
+    </div>
+  </div>
+
+  <main-subjets></main-subjets>
+
+</section>
