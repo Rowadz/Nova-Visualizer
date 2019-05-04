@@ -11,6 +11,7 @@ import {
 import { ActionButtonComponent } from './action-button/action-button.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { HighchartsChartModule } from 'highcharts-angular';
 
 @NgModule({
   imports: [CommonModule, MatIconModule, MatButtonModule, RouterModule],
@@ -22,7 +23,8 @@ import { RouterModule } from '@angular/router';
     MatRippleModule,
     MatIconModule,
     MatSnackBarModule,
-    ActionButtonComponent
+    ActionButtonComponent,
+    HighchartsChartModule
   ],
   declarations: [ActionButtonComponent]
 })

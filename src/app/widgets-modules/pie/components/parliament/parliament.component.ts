@@ -11,7 +11,6 @@ require('highcharts/modules/item-series')(Highcharts);
 })
 export class ParliamentComponent implements OnInit {
   Highcharts = Highcharts;
-  chartConstructor = 'chart';
   chartOptions: Highcharts.Options;
   constructor(private readonly pieService: PieService) {}
 

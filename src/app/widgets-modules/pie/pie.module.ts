@@ -11,13 +11,12 @@ import { MatModule } from '../mat/mat.module';
 import { Pie3DComponent } from './components/pie3-d/pie3-d.component';
 
 @NgModule({
-  declarations: [PieComponent, ParliamentComponent, PieParentComponent, Pie3DComponent],
-  imports: [
-    CommonModule,
-    PieRoutingModule,
-    HighchartsChartModule,
-    MatToolbarModule,
-    MatModule
-  ]
+  declarations: [
+    PieComponent,
+    ParliamentComponent,
+    PieParentComponent,
+    Pie3DComponent
+  ],
+  imports: [CommonModule, PieRoutingModule, MatToolbarModule, MatModule]
 })
 export class PieModule {}

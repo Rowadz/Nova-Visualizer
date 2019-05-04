@@ -10,7 +10,6 @@ import * as Highcharts from 'highcharts';
 })
 export class PieComponent implements OnInit {
   Highcharts = Highcharts;
-  chartConstructor = 'chart';
   chartOptions: Highcharts.Options;
   constructor(private readonly pieService: PieService) {}
 

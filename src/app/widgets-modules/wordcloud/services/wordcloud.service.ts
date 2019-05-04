@@ -12,63 +12,46 @@ export class WordcloudService {
     private readonly notifier: NotifierService
   ) {}
 
-  async init(): Promise<void> {
+  async init(): Promise<any> {
     this.DB.dbName = this.notifier.selectedDB;
 
     const myWords = await this.DB.getAll();
+    return this.pieChartOption(
+      myWords.map(({ name, mark }: TreeSubejct) => ({ name, weight: mark }))
+    );
+  }
 
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-
-    const svg = select('svg')
-      .attr('width', width)
-      .attr('height', height)
-      .append('g');
-    const color = scaleOrdinal()
-      .domain(myWords.map(d => d.name))
-      .range(schemeDark2);
-    const wordLayout = cloud()
-      .size([width, height])
-      .words(
-        myWords.map((d: TreeSubejct) => {
-          return { text: d.name, size: d.mark };
-        })
-      )
-      .padding(10)
-      .fontSize(function(d: any) {
-        return d.size / 2;
-      })
-      .on('end', words => {
-        svg
-          .append('g')
-          .attr(
-            'transform',
-            'translate(' +
-              wordLayout.size()[0] / 2 +
-              ',' +
-              wordLayout.size()[1] / 2 +
-              ')'
-          )
-          .selectAll('text')
-          .data(words)
-          .enter()
-          .append('text')
-          .attr('fill', (d: any) => {
-            return color(d.text) as any;
-          })
-          .style('font-size', function(d: any) {
-            return d.size + 'px';
-          })
-          .attr('text-anchor', 'middle')
-          .attr('transform', function(d: any) {
-            return 'translate(' + [d.x, d.y] + ')rotate(' + d.rotate + ')';
-          })
-          .text(function(d: any) {
-            return d.text;
-          });
-      });
-    wordLayout.start();
-
-    console.log(color('dsa'));
+  private pieChartOption(
+    data: Array<{ name: string; weight: number }>
+  ): Highcharts.Options {
+    return {
+      title: undefined,
+      chart: {
+        type: 'wordcloud',
+        animation: true
+      },
+      credits: {
+        enabled: false
+      },
+      tooltip: {
+        headerFormat: '',
+        pointFormat:
+          '<span style="color:{point.color};">\u25CF</span> <b> {point.name}</b><br/>' +
+          'MARK: <b>{point.weight}</b><br/>'
+      } as Highcharts.TooltipOptions,
+      plotOptions: {
+        wordcloud: {
+          rotation: 90,
+          cursor: 'pointer',
+          allowPointSelect: true
+        } as Highcharts.PlotWordcloudOptions
+      },
+      series: [
+        {
+          type: 'wordcloud',
+          data
+        }
+      ]
+    };
   }
 }
