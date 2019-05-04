@@ -25,7 +25,12 @@ export class WordcloudService {
     data: Array<{ name: string; weight: number }>
   ): Highcharts.Options {
     return {
-      title: undefined,
+      title: {
+        text: 'العلامات'
+      },
+      subtitle: {
+        text: 'كل ما كبرت الكلمة بتكون علامة اكبر'
+      },
       chart: {
         type: 'wordcloud',
         animation: true
