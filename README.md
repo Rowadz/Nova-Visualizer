@@ -18,6 +18,7 @@
 - Represeting the marks as
   - Donut chart ✅
   - Histogram Chart ❌
+  - wordcloud Chart ❌
   - Bubble Chart ❌
   - Density plot ❌
   - Scatterplot ❌

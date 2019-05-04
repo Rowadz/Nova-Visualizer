@@ -15,7 +15,8 @@ export class ActionButtonComponent implements OnInit {
     this.fabButtons = [
       { icon: 'edit', route: '', color: 'warn' },
       { icon: 'school', route: 'tree', color: 'primary' },
-      { icon: 'pie_chart', route: 'pie', color: 'primary' }
+      { icon: 'pie_chart', route: 'pie', color: 'primary' },
+      { icon: 'face', route: 'wordcloud', color: 'primary' }
     ];
     this.buttons = [];
   }

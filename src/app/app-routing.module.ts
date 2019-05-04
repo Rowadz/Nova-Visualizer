@@ -14,6 +14,10 @@ const routes: Routes = [
   {
     path: 'pie',
     loadChildren: './widgets-modules/pie/pie.module#PieModule'
+  },
+  {
+    path: 'wordcloud',
+    loadChildren: './widgets-modules/wordcloud/wordcloud.module#WordcloudModule'
   }
 ];
 
