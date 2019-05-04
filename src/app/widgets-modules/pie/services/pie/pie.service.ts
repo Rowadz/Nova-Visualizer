@@ -30,7 +30,12 @@ export class PieService {
     seriesType: string
   ): Highcharts.Options {
     return {
-      title: 'العلامات',
+      title: {
+        text: 'العلامات'
+      },
+      subtitle: {
+        text: 'ضيف او ضيفي علامات من الشجرة, بيطلعو هون'
+      },
       chart: {
         type: 'pie',
         animation: true,

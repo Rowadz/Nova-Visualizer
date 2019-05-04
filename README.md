@@ -19,11 +19,6 @@
   - Donut 3D chart ✅
   - Pie chart ✅
   - Parliament chart ✅
-  - Histogram Chart ❌
-  - wordcloud Chart ❌
-  - Bubble Chart ❌
-  - Density plot ❌
-  - Scatterplot ❌
-  - Bubble plot ❌
-  - Circular barplot ❌
-  - Lollipop chart ❌
+  - Column Chart ✅
+  - wordcloud Chart ✅
+  - packed-bubble Chart ❌

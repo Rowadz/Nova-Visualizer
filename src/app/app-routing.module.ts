@@ -18,6 +18,10 @@ const routes: Routes = [
   {
     path: 'wordcloud',
     loadChildren: './widgets-modules/wordcloud/wordcloud.module#WordcloudModule'
+  },
+  {
+    path: 'column',
+    loadChildren: './widgets-modules/column/column.module#ColumnModule'
   }
 ];
 

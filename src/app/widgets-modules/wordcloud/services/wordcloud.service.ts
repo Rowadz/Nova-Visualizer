@@ -16,12 +16,12 @@ export class WordcloudService {
     this.DB.dbName = this.notifier.selectedDB;
 
     const myWords = await this.DB.getAll();
-    return this.pieChartOption(
+    return this.worldColudhartOption(
       myWords.map(({ name, mark }: TreeSubejct) => ({ name, weight: mark }))
     );
   }
 
-  private pieChartOption(
+  private worldColudhartOption(
     data: Array<{ name: string; weight: number }>
   ): Highcharts.Options {
     return {
