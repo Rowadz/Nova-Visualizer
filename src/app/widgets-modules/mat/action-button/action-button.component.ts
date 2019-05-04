@@ -13,10 +13,10 @@ export class ActionButtonComponent implements OnInit {
   fabTogglerState = 'inactive';
   constructor() {
     this.fabButtons = [
-      { icon: 'edit', route: '', color: 'warn' },
+      { icon: 'edit', route: '', color: 'accent' },
       { icon: 'school', route: 'tree', color: 'primary' },
       { icon: 'pie_chart', route: 'pie', color: 'primary' },
-      { icon: 'face', route: 'wordcloud', color: 'primary' }
+      { icon: 'translate', route: 'wordcloud', color: 'primary' }
     ];
     this.buttons = [];
   }

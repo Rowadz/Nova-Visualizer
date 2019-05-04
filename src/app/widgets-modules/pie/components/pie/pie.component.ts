@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PieService } from '../../services/pie/pie.service';
+import * as Highcharts from 'highcharts';
 
 @Component({
   selector: 'app-pie',
@@ -8,9 +9,12 @@ import { PieService } from '../../services/pie/pie.service';
   providers: [PieService]
 })
 export class PieComponent implements OnInit {
+  Highcharts = Highcharts;
+  chartConstructor = 'chart';
+  chartOptions: Highcharts.Options;
   constructor(private readonly pieService: PieService) {}
 
-  ngOnInit(): void {
-    this.pieService.init();
+  async ngOnInit(): Promise<void> {
+    this.chartOptions = await this.pieService.init();
   }
 }

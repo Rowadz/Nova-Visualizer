@@ -1,16 +1,8 @@
 import { Injectable } from '@angular/core';
-import {
-  select,
-  pie,
-  arc,
-  scaleOrdinal,
-  schemeDark2,
-  entries,
-  schemeAccent
-} from 'd3';
 import { DBService } from 'src/app/services/db.service';
 import { NotifierService } from 'src/app/services/notifier.service';
 import { TreeSubejct } from 'src/app/config/models/tree-subject.model';
+import { Chart3dOptions, PlotPieOptions } from 'highcharts';
 
 @Injectable()
 export class PieService {
@@ -19,104 +11,124 @@ export class PieService {
     private readonly notifier: NotifierService
   ) {}
 
-  async init() {
+  async init(seriesType: string = 'pie'): Promise<Highcharts.Options> {
     this.DB.dbName = this.notifier.selectedDB;
-    const details = this.mapDataToPie(await this.DB.getAll());
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-
-    const radius = Math.min(width, height) / 2;
-
-    const svg = select('svg')
-      .attr('width', width)
-      .attr('height', height)
-      .append('g')
-      .attr('transform', `translate(${width / 2}, ${height / 2})`);
-
-    const data = details.reduce((prev, curr) => {
-      prev[curr.name] = curr.mark;
-      return prev;
-    }, {});
-
-    // set the color scale
-    const color = scaleOrdinal()
-      .domain(details.map(d => d.name))
-      .range(schemeAccent);
-
-    const marksPie = pie()
-      .sort(null)
-      .value((d: any) => {
-        return d.value;
-      });
-    const data_ready = marksPie(entries(data) as any);
-
-    const marksArc = arc()
-      .innerRadius(radius * 0.5)
-      .outerRadius(radius * 0.8);
-
-    const outerArc = arc()
-      .innerRadius(radius * 0.9)
-      .outerRadius(radius * 0.9);
-
-    svg
-      .selectAll('allSlices')
-      .data(data_ready)
-      .enter()
-      .append('path')
-      .attr('d', marksArc as any)
-      .attr(
-        'fill',
-        (d: any): any => {
-          return color(d.data.key);
-        }
-      )
-      .attr('stroke', 'white')
-      .style('stroke-width', '2px')
-      .style('opacity', 0.7);
-
-    // Add the polylines between chart and labels:
-    svg
-      .selectAll('allPolylines')
-      .data(data_ready)
-      .enter()
-      .append('polyline')
-      .attr('stroke', 'black')
-      .style('fill', 'none')
-      .attr('stroke-width', 1)
-      .attr(
-        'points',
-        (d: any): any => {
-          const posA = marksArc.centroid(d);
-          const posB = outerArc.centroid(d);
-          const posC = outerArc.centroid(d);
-          const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
-          posC[0] = radius * 0.95 * (midangle < Math.PI ? 1 : -1);
-          return [posA, posB, posC];
-        }
-      );
-
-    // Add the polylines between chart and labels:
-    svg
-      .selectAll('allLabels')
-      .data(data_ready)
-      .enter()
-      .append('text')
-      .text((d: any) => `${d.data.key} : ${d.data.value}`)
-      .attr('transform', (d: any) => {
-        const pos = outerArc.centroid(d);
-        const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
-        pos[0] = radius * 0.99 * (midangle < Math.PI ? 1 : -1);
-        return 'translate(' + pos + ')';
-      })
-      .style('text-anchor', function(d) {
-        const midangle = d.startAngle + (d.endAngle - d.startAngle) / 2;
-        return midangle < Math.PI ? 'start' : 'end';
-      });
+    const data = this.mapDataToPie(await this.DB.getAll());
+    return this.pieChartOption(data, seriesType) as Highcharts.Options;
   }
 
   private mapDataToPie(
     d: Array<TreeSubejct>
-  ): Array<{ name: string; mark: number }> {
-    return d.map(({ mark, name }: TreeSubejct) => ({ name, mark }));
+  ): Array<{ name: string; y: number }> {
+    return d
+      .map(({ mark, name }: TreeSubejct) => ({ name, y: +mark }))
+      .sort((a, b) => (a.y > b.y ? -1 : 1));
+  }
+
+  private pieChartOption(
+    data: Array<{ name: string; y: number }>,
+    seriesType: string
+  ): Highcharts.Options {
+    return {
+      title: 'العلامات',
+      chart: {
+        type: 'pie',
+        animation: true,
+        ...this.threeDOptions(seriesType, true)
+      },
+      credits: {
+        enabled: false
+      },
+      tooltip: {
+        headerFormat: '',
+        pointFormat:
+          '<span style="color:{point.color};">\u25CF</span> <b> {point.name}</b><br/>' +
+          'MARK: <b>{point.y}</b><br/>'
+      },
+      legend: {
+        enabled: true,
+        layout: 'horizontal',
+        floating: false,
+        align: seriesType === 'pie' ? 'right' : 'center',
+        verticalAlign: seriesType === 'pie' ? 'middle' : 'top',
+        navigation: {
+          animation: true,
+          arrowSize: 12,
+          style: {
+            fontWeight: 'bold',
+            fontSize: '12px'
+          }
+        }
+      },
+      plotOptions: {
+        pie: {
+          ...this.threeDOptions(seriesType, false),
+          cursor: 'pointer',
+          showInLegend: true,
+          dataLabels: {
+            enabled: true,
+            format: '\u202B' + '{point.name}', // \u202B is RLE char for RTL support,
+            style: {
+              fontSize: '15px',
+              textShadow: false
+            },
+            useHTML: true
+          }
+        }
+      },
+      series: [
+        {
+          name: 'MARKS',
+          allowPointSelect: true,
+          type: 'item',
+          data: [...data],
+          ...this.seriesOptionsBasedOnType(seriesType)
+        }
+      ]
+    } as Highcharts.Options;
+  }
+
+  private seriesOptionsBasedOnType(type: string): Highcharts.SeriesOptions {
+    switch (type) {
+      case 'item':
+        return {
+          type,
+          size: '100%',
+          startAngle: -100,
+          endAngle: 100,
+          dataLabels: {
+            enabled: true,
+            format: '\u202B' + '{point.name}', // \u202B is RLE char for RTL support,
+            useHTML: true
+          }
+        };
+
+      default:
+        return {
+          type: 'pie'
+        };
+        break;
+    }
+  }
+
+  private threeDOptions(
+    type: string,
+    chart: boolean
+  ): Chart3dOptions | Partial<PlotPieOptions> {
+    if (type === '3d') {
+      if (chart) {
+        return {
+          options3d: {
+            enabled: true,
+            alpha: 45
+          }
+        } as Chart3dOptions;
+      } else {
+        return {
+          innerSize: 100,
+          depth: 45
+        } as Partial<PlotPieOptions>;
+      }
+    }
   }
 }
