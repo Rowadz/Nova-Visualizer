@@ -15,6 +15,5 @@ export class ColumnComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.chartOptions = await this.columnService.init();
-    console.log(this.chartOptions);
   }
 }

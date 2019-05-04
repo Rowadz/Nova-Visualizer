@@ -28,6 +28,19 @@ export class SubjectsDB extends Dexie {
     return this.subject.toArray();
   }
 
+  async del(cid: string): Promise<void> {
+    this.subject.delete(cid as any);
+  }
+
+  async getOptionalCount(
+    cids: Array<string>
+  ): Promise<Array<TreeSubejct> | undefined> {
+    return this.subject
+      .where('cid')
+      .anyOf(cids)
+      .toArray();
+  }
+
   private async checkIfExists(id: any): Promise<TreeSubejct | undefined> {
     return this.subject.get(id);
   }

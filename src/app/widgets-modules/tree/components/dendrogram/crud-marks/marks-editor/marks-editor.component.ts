@@ -5,6 +5,10 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DBService } from 'src/app/services/db.service';
 import { NotifierService } from 'src/app/services/notifier.service';
 
+export interface MarkEditor extends TreeSubejct {
+  delete?: boolean;
+}
+
 @Component({
   selector: 'app-marks-editor',
   templateUrl: './marks-editor.component.html',
@@ -19,7 +23,7 @@ export class MarksEditorComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<MarksEditorComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: TreeSubejct,
+    @Inject(MAT_DIALOG_DATA) public data: MarkEditor,
     private readonly fb: FormBuilder,
     private readonly DB: DBService,
     private readonly notifierService: NotifierService
@@ -59,6 +63,13 @@ export class MarksEditorComponent implements OnInit {
         this.notifierService.reDrawGraph.next();
       })
       .catch((e: any) => console.error(e));
+  }
+
+  async delete() {
+    await this.DB.del(this.data.cid);
+    this.dialogRef.close();
+    this.notifierService.closeDialogs.next();
+    this.notifierService.reDrawGraph.next();
   }
 
   private initForm(): void {

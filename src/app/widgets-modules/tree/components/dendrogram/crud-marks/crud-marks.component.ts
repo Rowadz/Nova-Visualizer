@@ -2,11 +2,13 @@ import { Component, OnInit, Inject } from '@angular/core';
 import {
   MatBottomSheetRef,
   MAT_BOTTOM_SHEET_DATA,
-  MatDialog
+  MatDialog,
+  MatSnackBar
 } from '@angular/material';
 import { TreeSubejct } from 'src/app/config/models/tree-subject.model';
 import { MarksEditorComponent } from './marks-editor/marks-editor.component';
 import { NotifierService } from 'src/app/services/notifier.service';
+import { DBService } from 'src/app/services/db.service';
 
 @Component({
   selector: 'crud-marks',
@@ -18,7 +20,9 @@ export class CrudMarksComponent implements OnInit {
     private readonly bottomSheetRef: MatBottomSheetRef<CrudMarksComponent>,
     @Inject(MAT_BOTTOM_SHEET_DATA) public data: TreeSubejct,
     private readonly dialog: MatDialog,
-    private readonly notifierService: NotifierService
+    private readonly notifierService: NotifierService,
+    private readonly DB: DBService,
+    private readonly snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -29,7 +33,39 @@ export class CrudMarksComponent implements OnInit {
     this.bottomSheetRef.dismiss();
   }
 
-  openMarkEditor(): void {
+  async openMarkEditor(): Promise<void> {
+    const { optional, mark } = this.data;
+    // when the user wants to update an optional subject
+    if (mark) {
+      this.openEditor();
+    } else if (!optional) {
+      // normal nubject
+      this.openEditor();
+    } else if (optional && (await this.checkIFOptional())) {
+      // don't allow the user to save more thant 2 optional subjects
+      this.openEditor();
+    }
+  }
+
+  private async checkIFOptional(): Promise<boolean> {
+    const optionalSubjects = await this.DB.getOptionalCount();
+    if (optionalSubjects.length >= 2) {
+      const [name1, name2] = optionalSubjects.map((d: TreeSubejct) => d.name);
+      const msg = `
+        انتا اخترت ${name1} &  ${name2}
+      `;
+      this.snackBar.open(msg, 'بتقدر تسمح وحده منهم', {
+        verticalPosition: 'top',
+        horizontalPosition: 'left',
+        duration: 7000
+      });
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  private openEditor(): void {
     this.dialog.open(MarksEditorComponent, {
       width: '400px',
       data: this.data

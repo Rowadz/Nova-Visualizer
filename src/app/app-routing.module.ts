@@ -22,6 +22,11 @@ const routes: Routes = [
   {
     path: 'column',
     loadChildren: './widgets-modules/column/column.module#ColumnModule'
+  },
+  {
+    path: 'packed-bubble',
+    loadChildren:
+      './widgets-modules/packed-bubble/packed-bubble.module#PackedBubbleModule'
   }
 ];
 

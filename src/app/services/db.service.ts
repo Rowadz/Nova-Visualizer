@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { SubjectsDB } from '../config/DB/db.class';
 import { TreeSubejct } from '../config/models/tree-subject.model';
+import { NotifierService } from './notifier.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class DBService {
     this.DB = new SubjectsDB(name);
   }
 
-  constructor() {}
+  constructor(private readonly notifierService: NotifierService) {}
 
   save(d: TreeSubejct): Promise<number> {
     return this.DB.save(d);
@@ -23,5 +24,18 @@ export class DBService {
 
   getAll(): Promise<Array<TreeSubejct>> {
     return this.DB.getAll();
+  }
+
+  del(cid: string): Promise<void> {
+    return this.DB.del(cid);
+  }
+
+  getOptionalCount() {
+    return this.DB.getOptionalCount(
+      this.notifierService
+        .giveSubject()
+        .filter((t: TreeSubejct) => t.optional)
+        .map(({ cid }: TreeSubejct) => cid)
+    );
   }
 }

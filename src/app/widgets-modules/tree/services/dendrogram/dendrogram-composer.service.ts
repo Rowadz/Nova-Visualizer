@@ -211,7 +211,7 @@ export class DendrogramComposerService {
   }
 
   private mergeDBDataWithSubject(d: Array<TreeSubejct>) {
-    this.subjects = this.notifier.giveSubject();
+    this.subjects = [...this.notifier.giveSubject()];
     const cids = d.map(({ cid }: TreeSubejct) => cid);
     this.subjects.forEach((ts: TreeSubejct, i: number) => {
       if (cids.includes(ts.cid)) {

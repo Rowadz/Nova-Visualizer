@@ -17,7 +17,10 @@
     <mat-hint>اقل شي 35 و اعلى شي 100</mat-hint>
   </mat-form-field>
 
-  <button mat-fab type="submit" [disabled]="markForm.invalid">
+  <button mat-fab type="submit" [disabled]="markForm.invalid" class="save-button">
     <mat-icon>save</mat-icon>
+  </button>
+  <button mat-fab type="button" color="warn" *ngIf="data.optional" (click)="delete()">
+    <mat-icon>delete</mat-icon>
   </button>
 </form>
