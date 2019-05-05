@@ -207,6 +207,10 @@ Apache License
 highcharts-angular
 SEE LICENSE IN <LICENSE>
 
+@angular/material/list
+
+@angular/material/core
+
 rxjs
 Apache-2.0
                                Apache License
@@ -1693,12 +1697,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 @angular/material/dialog
 
-@angular/material/core
-
-@angular/material/list
-
 @angular/material/divider
 
 @angular/material/form-field
 
 @angular/material/toolbar
+
+@angular/material/menu
