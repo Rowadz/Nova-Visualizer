@@ -4,6 +4,7 @@ import { TreeSubejct } from '../config/models/tree-subject.model';
 import { CS2012 } from '../config/tree-subjects/cs-2012.config';
 import { WE2017 } from '../config/tree-subjects/we-2017.config';
 import { SE2012 } from '../config/tree-subjects/se-2012.config';
+import { CS2017 } from '../config/tree-subjects/cs-2017.config';
 
 export type dbNames = 'CS2012' | 'CS2017' | 'SE2012' | 'WE2017';
 @Injectable({
@@ -29,6 +30,8 @@ export class NotifierService {
         return WE2017;
       case 'SE2012':
         return SE2012;
+      case 'CS2017':
+        return CS2017;
     }
   }
 }

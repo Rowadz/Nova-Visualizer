@@ -1,2 +1,49 @@
-<highcharts-chart *ngIf="chartOptions" [Highcharts]="Highcharts" [options]="chartOptions"
-  style="width: 100%; height: 100vh; display: block;"></highcharts-chart>
+<app-filters (changeFilter)="changeFilter($event)"> </app-filters>
+
+<section class="row">
+  <div class="col-lg-2 col-md-2 col-sm-12" *ngIf="ratingOption">
+    <mat-list>
+      <mat-list-item>
+        <div class="square ex ml-1"></div>
+        ممتاز
+      </mat-list-item>
+      <mat-list-item>
+        <div class="square vg ml-1"></div>
+        جيد جدا
+      </mat-list-item>
+      <mat-list-item>
+        <div class="square g ml-1"></div>
+        جيد
+      </mat-list-item>
+
+      <mat-list-item>
+        <div class="square s ml-1"></div>
+        مقبول
+      </mat-list-item>
+
+      <mat-list-item>
+        <div class="square w ml-1"></div>
+        ضعيف
+      </mat-list-item>
+
+      <mat-list-item>
+        <div class="square f ml-1"></div>
+        رسوب
+      </mat-list-item>
+    </mat-list>
+  </div>
+  <div
+    [ngClass]="
+      ratingOption
+        ? 'col-lg-10 col-md-10 col-sm-12'
+        : 'col-lg-12 col-md-12 col-sm-12'
+    "
+  >
+    <highcharts-chart
+      *ngIf="chartOptions"
+      [Highcharts]="Highcharts"
+      [options]="chartOptions"
+      style="width: 100%; height: 100vh; display: block;"
+    ></highcharts-chart>
+  </div>
+</section>

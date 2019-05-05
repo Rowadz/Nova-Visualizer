@@ -1,1 +1,28 @@
+.square {
+  height: 10px;
+  width: 10px;
 
+  &.ex {
+    background-color: #0DF205;
+  }
+
+  &.vg {
+    background-color: #0D00C4;
+  }
+
+  &.g {
+    background-color: #755671;
+  }
+
+  &.s {
+    background-color: #F23A29;
+  }
+
+  &.w {
+    background-color: #F26B5E;
+  }
+
+  &.f {
+    background-color: #0D0D0D;
+  }
+}

@@ -3,6 +3,7 @@ import { DBService } from 'src/app/services/db.service';
 import { NotifierService } from 'src/app/services/notifier.service';
 import { TreeSubejct } from 'src/app/config/models/tree-subject.model';
 import { Chart3dOptions, PlotPieOptions } from 'highcharts';
+import { FilterType } from 'src/app/config/models/filter-types.type';
 
 @Injectable()
 export class PieService {
@@ -11,23 +12,59 @@ export class PieService {
     private readonly notifier: NotifierService
   ) {}
 
-  async init(seriesType: string = 'pie'): Promise<Highcharts.Options> {
+  async init(
+    seriesType: string = 'pie',
+    filterType: FilterType = 'nothing'
+  ): Promise<Highcharts.Options> {
     this.DB.dbName = this.notifier.selectedDB;
-    const data = this.mapDataToPie(await this.DB.getAll());
-    return this.pieChartOption(data, seriesType) as Highcharts.Options;
+    const data = [...this.mapDataToPie(await this.DB.getAll(), filterType)];
+    return this.pieChartOption(
+      data,
+      seriesType,
+      filterType
+    ) as Highcharts.Options;
   }
 
   private mapDataToPie(
-    d: Array<TreeSubejct>
-  ): Array<{ name: string; y: number }> {
+    d: Array<TreeSubejct>,
+    filterType: FilterType
+  ): Array<{ name: string; y: number; color?: string }> {
     return d
-      .map(({ mark, name }: TreeSubejct) => ({ name, y: +mark }))
+      .map(({ mark, name }: TreeSubejct) => ({ name, y: +mark, color: '' }))
+      .map(obj => {
+        if (filterType === 'failSucc') {
+          if (obj.y <= 49) {
+            console.log(obj.y, obj.name);
+            obj.color = '#F6615F';
+          } else if (obj.y >= 50) {
+            obj.color = '#60999B';
+          }
+        } else if (filterType === 'rating') {
+          if (obj.y < 50) {
+            obj.color = '#0D0D0D';
+          } else if (obj.y >= 50 && obj.y <= 59) {
+            obj.color = '#F26B5E';
+          } else if (obj.y >= 60 && obj.y <= 69) {
+            obj.color = '#F23A29';
+          } else if (obj.y >= 70 && obj.y <= 79) {
+            obj.color = '#755671';
+          } else if (obj.y >= 80 && obj.y <= 89) {
+            obj.color = '#0D00C4';
+          } else {
+            obj.color = '#0DF205';
+          }
+        } else {
+          delete obj.color;
+        }
+        return obj;
+      })
       .sort((a, b) => (a.y > b.y ? -1 : 1));
   }
 
   private pieChartOption(
-    data: Array<{ name: string; y: number }>,
-    seriesType: string
+    data: Array<{ name: string; y: number; color?: string }>,
+    seriesType: string,
+    filterType: FilterType
   ): Highcharts.Options {
     return {
       title: {
@@ -72,7 +109,7 @@ export class PieService {
           'MARK: <b>{point.y}</b><br/>'
       },
       legend: {
-        enabled: true,
+        enabled: filterType === 'nothing',
         layout: 'horizontal',
         floating: false,
         align: seriesType === 'pie' ? 'right' : 'center',
