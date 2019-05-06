@@ -6,7 +6,7 @@ import {
 import { MatSnackBar, MatBottomSheet } from '@angular/material';
 import { TreeSubejct } from 'src/app/config/models/tree-subject.model';
 import { CrudMarksComponent } from './crud-marks/crud-marks.component';
-import { NotifierService } from 'src/app/services/notifier.service';
+import { NotifierService, ReDrawConf } from 'src/app/services/notifier.service';
 import { select } from 'd3';
 import { RouterConf } from 'src/app/config/models/router-conf.model';
 
@@ -28,10 +28,19 @@ export class DendrogramComponent implements OnInit {
     this.dendrogramComposer.initSvg();
     setTimeout(() => this.toast('حرك عجل الفأرة', 'اوك'), 0);
     this.subToEvents();
-    this.notifierService.reDrawGraph.subscribe(() => {
-      select('svg').remove();
-      select('#dendContainer').append('svg');
-      this.dendrogramComposer.initSvg();
+    this.notifierService.reDrawGraph.subscribe(({ cid, type }: ReDrawConf) => {
+      select('svg')
+        .select('g')
+        .select('g')
+        .selectAll(`g circle#cid-${cid}`)
+        .style('stroke', 'steelblue')
+        .style('stroke-width', type === 'add' ? 1 : 3)
+        .style('fill', type === 'add' ? '#011826' : '#fff');
+      const action = type === 'add' ? 'إضافة' : 'إزالة';
+      this.toast(`
+            تمت ${action} المادة
+        `);
+      // this.dendrogramComposer.initSvg();
     });
   }
 

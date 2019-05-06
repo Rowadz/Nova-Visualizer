@@ -7,15 +7,20 @@ import { SE2012 } from '../config/tree-subjects/se-2012.config';
 import { CS2017 } from '../config/tree-subjects/cs-2017.config';
 
 export type dbNames = 'CS2012' | 'CS2017' | 'SE2012' | 'WE2017';
+export interface ReDrawConf {
+  cid: string;
+  type: 'del' | 'add';
+}
 @Injectable({
   providedIn: 'root'
 })
 export class NotifierService {
-  readonly reDrawGraph: Subject<void>;
+  // string is cid
+  readonly reDrawGraph: Subject<ReDrawConf>;
   readonly closeDialogs: Subject<void>;
   selectedDB: dbNames;
   constructor() {
-    this.reDrawGraph = new Subject<void>();
+    this.reDrawGraph = new Subject<ReDrawConf>();
     this.closeDialogs = new Subject<void>();
     if (!this.selectedDB) {
       this.selectedDB = localStorage.getItem('db') as dbNames;

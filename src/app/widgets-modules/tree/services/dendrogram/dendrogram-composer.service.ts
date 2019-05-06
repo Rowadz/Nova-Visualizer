@@ -149,6 +149,7 @@ export class DendrogramComposerService {
     >
   ) {
     g.append('circle')
+      .attr('id', d => `cid-${d.data.data.cid}`)
       .attr('r', d => (this.getMark(d) ? 5 : 1))
       .style('fill', d => (this.getMark(d) ? '#011826' : '#fff'))
       .style('stroke', 'steelblue')

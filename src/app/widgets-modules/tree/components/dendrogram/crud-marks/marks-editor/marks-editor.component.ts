@@ -60,7 +60,10 @@ export class MarksEditorComponent implements OnInit {
       .then((n: number) => {
         this.dialogRef.close();
         this.notifierService.closeDialogs.next();
-        this.notifierService.reDrawGraph.next();
+        this.notifierService.reDrawGraph.next({
+          cid: this.data.cid,
+          type: 'add'
+        });
       })
       .catch((e: any) => console.error(e));
   }
@@ -69,7 +72,7 @@ export class MarksEditorComponent implements OnInit {
     await this.DB.del(this.data.cid);
     this.dialogRef.close();
     this.notifierService.closeDialogs.next();
-    this.notifierService.reDrawGraph.next();
+    this.notifierService.reDrawGraph.next({ cid: this.data.cid, type: 'del' });
   }
 
   private initForm(): void {

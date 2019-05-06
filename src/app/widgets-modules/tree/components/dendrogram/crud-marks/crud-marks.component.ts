@@ -50,7 +50,6 @@ export class CrudMarksComponent implements OnInit {
   private async checkIFOptional(): Promise<boolean> {
     const optionalSubjects = await this.DB.getOptionalCount();
     const maxOptional = this.notifierService.selectedDB === 'CS2017' ? 3 : 2;
-    console.log(maxOptional, optionalSubjects);
     if (optionalSubjects.length >= maxOptional) {
       const [name1, name2, name3] = optionalSubjects.map(
         (d: TreeSubejct) => d.name
