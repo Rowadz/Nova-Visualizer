@@ -34,16 +34,16 @@ export class CrudMarksComponent implements OnInit {
   }
 
   async openMarkEditor(): Promise<void> {
-    const { optional, mark } = this.data;
+    const data = (await this.DB.get(this.data.cid)) || this.data;
     // when the user wants to update an optional subject
-    if (mark) {
-      this.openEditor();
-    } else if (!optional) {
+    if (data.mark) {
+      this.openEditor(data);
+    } else if (!data.optional) {
       // normal nubject
-      this.openEditor();
-    } else if (optional && (await this.checkIFOptional())) {
+      this.openEditor(data);
+    } else if (data.optional && (await this.checkIFOptional())) {
       // don't allow the user to save more thant 2 optional subjects
-      this.openEditor();
+      this.openEditor(data);
     }
   }
 
@@ -69,10 +69,10 @@ export class CrudMarksComponent implements OnInit {
     }
   }
 
-  private openEditor(): void {
+  private openEditor(data: TreeSubejct): void {
     this.dialog.open(MarksEditorComponent, {
       width: '400px',
-      data: this.data
+      data
     });
   }
 }

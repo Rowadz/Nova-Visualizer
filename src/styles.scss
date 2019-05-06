@@ -17,6 +17,9 @@ $plant-theme: mat-light-theme($plant-primary, $plant-accent, $plant-warn);
 
 @include angular-material-theme($plant-theme);
 
+button {
+  outline: none !important;
+}
 
 html {
   overflow-x: hidden;

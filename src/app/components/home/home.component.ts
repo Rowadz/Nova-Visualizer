@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { NewThingsComponent } from './new-things/new-things.component';
 
 @Component({
   selector: 'app-home',
@@ -9,11 +11,17 @@ export class HomeComponent implements OnInit {
   myStyle = {};
   myParams: any;
 
-  constructor() {}
+  constructor(private readonly dialog: MatDialog) {}
 
   ngOnInit(): void {
     this.setAttr();
     this.setStyle();
+  }
+
+  openDialog(): void {
+    this.dialog.open(NewThingsComponent, {
+      width: '400px'
+    });
   }
 
   private setStyle(): void {

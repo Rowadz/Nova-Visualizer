@@ -7,13 +7,20 @@ import {
   MatRippleModule,
   MatIconModule,
   MatSnackBarModule,
-  MatMenuModule
+  MatMenuModule,
+  MatDialogModule,
+  MatBottomSheetModule,
+  MatFormFieldModule,
+  MatInputModule
 } from '@angular/material';
 import { ActionButtonComponent } from './action-button/action-button.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { HighchartsChartModule } from 'highcharts-angular';
 import { FiltersComponent } from './filters/filters.component';
+import { CrudMarksComponent } from './crud-marks/crud-marks.component';
+import { MarksEditorComponent } from './crud-marks/marks-editor/marks-editor.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -21,20 +28,42 @@ import { FiltersComponent } from './filters/filters.component';
     MatIconModule,
     MatButtonModule,
     RouterModule,
-    MatMenuModule
-  ],
-  exports: [
-    MatButtonModule,
-    MatSidenavModule,
     MatDividerModule,
     MatListModule,
+    MatMenuModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatBottomSheetModule,
+    MatFormFieldModule,
+    MatInputModule
+  ],
+  exports: [
+    MatSidenavModule,
     MatRippleModule,
+    MatMenuModule,
+    MatListModule,
+    MatButtonModule,
+    MatBottomSheetModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDividerModule,
     MatIconModule,
+    FormsModule,
     MatSnackBarModule,
     ActionButtonComponent,
     HighchartsChartModule,
-    FiltersComponent
+    FiltersComponent,
+    MatDialogModule,
+    CrudMarksComponent,
+    MarksEditorComponent,
+    ReactiveFormsModule
   ],
-  declarations: [ActionButtonComponent, FiltersComponent]
+  declarations: [
+    ActionButtonComponent,
+    FiltersComponent,
+    CrudMarksComponent,
+    MarksEditorComponent
+  ],
+  entryComponents: [CrudMarksComponent, MarksEditorComponent]
 })
 export class MatModule {}

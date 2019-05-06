@@ -5,10 +5,10 @@ import {
 } from '../../services/dendrogram/dendrogram-composer.service';
 import { MatSnackBar, MatBottomSheet } from '@angular/material';
 import { TreeSubejct } from 'src/app/config/models/tree-subject.model';
-import { CrudMarksComponent } from './crud-marks/crud-marks.component';
 import { NotifierService, ReDrawConf } from 'src/app/services/notifier.service';
 import { select } from 'd3';
 import { RouterConf } from 'src/app/config/models/router-conf.model';
+import { CrudMarksComponent } from 'src/app/widgets-modules/mat/crud-marks/crud-marks.component';
 
 @Component({
   selector: 'dendrogram',

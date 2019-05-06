@@ -8,20 +8,29 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './components/home/home.component';
 import { ParticlesModule } from 'angular-particle';
 import { MainSubjetsComponent } from './components/home/main-subjets/main-subjets.component';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule, MatBadgeModule } from '@angular/material';
 import { MainSubjetsCardComponent } from './components/home/main-subjets/main-subjets-card/main-subjets-card.component';
+import { NewThingsComponent } from './components/home/new-things/new-things.component';
 
 @NgModule({
-  declarations: [AppComponent, HomeComponent, MainSubjetsComponent, MainSubjetsCardComponent],
+  declarations: [
+    AppComponent,
+    HomeComponent,
+    MainSubjetsComponent,
+    MainSubjetsCardComponent,
+    NewThingsComponent
+  ],
   imports: [
     CommonModule,
     AppRoutingModule,
     MatModule,
     BrowserAnimationsModule,
     ParticlesModule,
-    MatCardModule
+    MatCardModule,
+    MatBadgeModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [NewThingsComponent]
 })
 export class AppModule {}

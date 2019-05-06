@@ -1,3 +1,12 @@
+<div class="fab-container">
+  <button mat-fab class="notifications-btn" color="primary" matBadge="🔥" matBadgePosition="after" matBadgeColor="warn"
+    (click)="openDialog()">
+    <mat-icon class="white-text">
+      notifications_active
+    </mat-icon>
+  </button>
+</div>
+
 <section class="container min-vh-100">
   <particles [params]="myParams" [style]="myStyle"></particles>
   <div class="row min-vh-100">
@@ -6,6 +15,11 @@
         نوفا راسم البيانات
       </h1>
       <img src="assets/logo.png" alt="main logo">
+      <div>
+        <button mat-fab color="primary" class="animated bounce infinite">
+          <mat-icon aria-label="Example icon-button with a heart icon">keyboard_arrow_down</mat-icon>
+        </button>
+      </div>
     </div>
   </div>
 

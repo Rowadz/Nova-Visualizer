@@ -1,16 +1,30 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { DBService } from 'src/app/services/db.service';
 import { NotifierService } from 'src/app/services/notifier.service';
 import { TreeSubejct } from 'src/app/config/models/tree-subject.model';
-import { Chart3dOptions, PlotPieOptions } from 'highcharts';
+import {
+  Chart3dOptions,
+  PlotPieOptions,
+  SeriesClickEventObject
+} from 'highcharts';
 import { FilterType } from 'src/app/config/models/filter-types.type';
+import { ServicesHelper } from 'src/app/widgets-modules/mat/helpers/services-helper.service';
+
+interface PieSeries extends TreeSubejct {
+  y: number;
+  color: string;
+}
 
 @Injectable()
-export class PieService {
+export class PieService extends ServicesHelper {
+  editPoint: EventEmitter<TreeSubejct>;
   constructor(
     private readonly DB: DBService,
     private readonly notifier: NotifierService
-  ) {}
+  ) {
+    super();
+    this.editPoint = new EventEmitter<TreeSubejct>();
+  }
 
   async init(
     seriesType: string = 'pie',
@@ -28,41 +42,22 @@ export class PieService {
   private mapDataToPie(
     d: Array<TreeSubejct>,
     filterType: FilterType
-  ): Array<{ name: string; y: number; color?: string }> {
-    return d
-      .map(({ mark, name }: TreeSubejct) => ({ name, y: +mark, color: '' }))
-      .map(obj => {
-        if (filterType === 'failSucc') {
-          if (obj.y <= 49) {
-            console.log(obj.y, obj.name);
-            obj.color = '#F6615F';
-          } else if (obj.y >= 50) {
-            obj.color = '#60999B';
-          }
-        } else if (filterType === 'rating') {
-          if (obj.y < 50) {
-            obj.color = '#0D0D0D';
-          } else if (obj.y >= 50 && obj.y <= 59) {
-            obj.color = '#F26B5E';
-          } else if (obj.y >= 60 && obj.y <= 69) {
-            obj.color = '#F23A29';
-          } else if (obj.y >= 70 && obj.y <= 79) {
-            obj.color = '#755671';
-          } else if (obj.y >= 80 && obj.y <= 89) {
-            obj.color = '#0D00C4';
-          } else {
-            obj.color = '#0DF205';
-          }
-        } else {
-          delete obj.color;
-        }
-        return obj;
-      })
-      .sort((a, b) => (a.y > b.y ? -1 : 1));
+  ): Array<PieSeries> {
+    return this.mapDataToColorsFromFilter<PieSeries>(
+      filterType,
+      d
+        .map((ts: TreeSubejct) => ({
+          y: +ts.mark,
+          color: '',
+          ...ts
+        }))
+        .sort((a, b) => (a.y > b.y ? -1 : 1)),
+      'y'
+    ) as any;
   }
 
   private pieChartOption(
-    data: Array<{ name: string; y: number; color?: string }>,
+    data: Array<PieSeries>,
     seriesType: string,
     filterType: FilterType
   ): Highcharts.Options {
@@ -125,6 +120,10 @@ export class PieService {
       },
       plotOptions: {
         pie: {
+          events: {
+            click: (e: SeriesClickEventObject) =>
+              this.editPoint.emit(e.point.options as TreeSubejct)
+          },
           ...this.threeDOptions(seriesType, false),
           cursor: 'pointer',
           showInLegend: true,
@@ -141,10 +140,15 @@ export class PieService {
       },
       series: [
         {
+          cursor: 'pointer',
           name: 'MARKS',
           allowPointSelect: true,
           type: 'item',
           data: [...data],
+          events: {
+            click: (e: SeriesClickEventObject) =>
+              this.editPoint.emit(e.point.options as TreeSubejct)
+          },
           ...this.seriesOptionsBasedOnType(seriesType)
         }
       ]
