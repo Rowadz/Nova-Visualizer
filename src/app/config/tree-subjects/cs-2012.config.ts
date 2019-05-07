@@ -69,7 +69,7 @@ export const CS2012: Array<TreeSubejct> = [
     dependsOn: ['0721220'],
     credit: 3
   },
-  { cid: '0250231', name: 'مبادئ الإحصاء و الإحتمالات', lvl: 2 },
+  { cid: '0250231', name: 'مبادئ الإحصاء و الإحتمالات', lvl: 2, credit: 3 },
   {
     cid: '0721221',
     name: 'تراكيب البيانات الشيئية',

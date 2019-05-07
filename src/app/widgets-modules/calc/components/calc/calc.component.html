@@ -1,0 +1,65 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button mat-icon-button [matMenuTriggerFor]="menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>
+        <mat-icon>voicemail</mat-icon>
+        <span>
+          ضيف مواد حره
+        </span>
+      </button>
+    </mat-menu>
+    <span class="example-spacer"></span>
+    <!-- <button mat-icon-button>
+      <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+    </button>
+    <button mat-icon-button>
+      <mat-icon aria-label="Example icon-button with a heart icon">favorite</mat-icon>
+    </button> -->
+  </mat-toolbar-row>
+</mat-toolbar>
+
+
+<section class="container">
+  <div class="row">
+    <div class="col-12 my-auto text-right">
+      <h1>
+        المعدل التراكمي :
+        {{ finalRes?.total  | number }}
+      </h1>
+      <h1>
+        الساعات :
+        {{ finalRes?.credits }}
+      </h1>
+    </div>
+    <div class="col-12 my-auto text-right">
+      <h1>
+        العلامات رتبهم من عنوان العامود
+      </h1>
+      <table mat-table [dataSource]="dataSource" class="w-100" matSort>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header dir="rtl"> Name </th>
+          <td mat-cell *matCellDef="let element" class="text-right"> {{element.name}} </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="mark">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header dir="rtl"> mark </th>
+          <td mat-cell *matCellDef="let element" class="text-right"> {{ element.mark }} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="credit">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header dir="rtl"> credit </th>
+          <td mat-cell *matCellDef="let element" class="text-right"> {{element.credit}} </td>
+        </ng-container>
+
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+</section>

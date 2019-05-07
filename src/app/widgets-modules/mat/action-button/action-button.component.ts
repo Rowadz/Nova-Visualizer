@@ -28,7 +28,8 @@ export class ActionButtonComponent implements OnInit {
         { icon: 'pie_chart', route: 'pie', color: 'primary' },
         { icon: 'translate', route: 'wordcloud', color: 'primary' },
         { icon: 'signal_cellular_alt', route: 'column', color: 'primary' },
-        { icon: 'scatter_plot', route: 'packed-bubble', color: 'primary' }
+        { icon: 'scatter_plot', route: 'packed-bubble', color: 'primary' },
+        { icon: 'highlight', route: 'calc', color: 'primary' }
       ];
     } else {
       this.fabButtons = [{ icon: 'edit', route: '', color: 'accent' }];

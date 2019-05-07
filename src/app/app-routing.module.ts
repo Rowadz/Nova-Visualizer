@@ -27,6 +27,10 @@ const routes: Routes = [
     path: 'packed-bubble',
     loadChildren:
       './widgets-modules/packed-bubble/packed-bubble.module#PackedBubbleModule'
+  },
+  {
+    path: 'calc',
+    loadChildren: './widgets-modules/calc/calc.module#CalcModule'
   }
 ];
 
