@@ -1,0 +1,21 @@
+<form [formGroup]="form">
+  <mat-form-field appearance="outline" class="w-100" hideRequiredMarker="false">
+    <mat-label>{{ label }}</mat-label>
+    <input matInput [required]="required" [formControlName]="control" [type]="type" [placeholder]="placeholder" />
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    <mat-hint>
+      <ng-content select=".hint"></ng-content>
+    </mat-hint>
+    <mat-error style="height: 20px;" *ngIf="
+          form.controls[control].invalid &&
+          form.controls[control].touched &&
+          form.get(control).errors?.required
+        ">
+      🤨
+    </mat-error>
+
+    <mat-error *ngIf="form.controls[control].invalid && form.controls[control].touched">
+      <ng-content select=".error"> </ng-content>
+    </mat-error>
+  </mat-form-field>
+</form>

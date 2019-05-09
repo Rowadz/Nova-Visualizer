@@ -25,7 +25,9 @@ export class WordcloudService extends ServicesHelper {
   async init(filterType: FilterType = 'nothing'): Promise<any> {
     this.DB.dbName = this.notifier.selectedDB;
 
-    const myWords = await this.DB.getAll();
+    const myWords = (await this.DB.getAll()).filter(
+      ({ cid }: TreeSubejct) => cid.split('-').length !== 5
+    );
     return this.worldColudhartOption(
       this.mapDataToColorsFromFilter<WordcloudCustom>(
         filterType,

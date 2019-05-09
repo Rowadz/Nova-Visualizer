@@ -7,4 +7,5 @@ export interface TreeSubejct {
   optional?: true;
   mark?: number;
   credit?: number;
+  inTotal?: boolean;
 }

@@ -1,0 +1,56 @@
+<mat-accordion dir="rtl">
+  <mat-expansion-panel expanded="true" class="mt-5">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        دخل انتا المواد بليز
+      </mat-panel-title>
+      <mat-panel-description>
+        <mat-icon>account_circle</mat-icon>
+        متطلبات الجامعة الإختيارية 12 ساعــة ~ أربع مواد ~
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <form [formGroup]="hours12" style="text-align: right" (ngSubmit)="saveToDB()" class="pt-5 pb-5">
+      <div formArrayName="subjects12" class="row">
+        <ng-container *ngFor="let form of formArray.controls; let i = index" [formGroupName]="i">
+          <common-input-rules label="اسم المادة الحرة" placeholder="اسم المادة" [form]="form" control="name"
+            required="true" class="col-4  w-100">
+            <div class="hint">
+              علوم عكسريه كمثال
+            </div>
+          </common-input-rules>
+          <common-input-rules class="col-4  w-100" [label]="' العلامة في ' + (form.value.name ? form.value.name : '')"
+            placeholder="العلامة" [form]="form" control="mark">
+            <div class="hint">
+              100 🙃 ؟
+            </div>
+            <div class="error" *ngIf="form.controls.mark.errors?.pattern">
+              مش رقم 😴
+            </div>
+            <div class="error" *ngIf="form.controls.mark.errors?.min">
+              اقل شي 35
+            </div>
+            <div class="error" *ngIf="form.controls.mark.errors?.max">
+              اكبر شي 100
+            </div>
+          </common-input-rules>
+          <mat-checkbox formControlName="inTotal">
+            تدخل بالمعدل التركمي ؟
+          </mat-checkbox>
+
+        </ng-container>
+        <div class="col-12">
+          <button mat-raised-button color="primary" type="submit" [disabled]="hours12.invalid"
+            *ngIf="formArray.length >= 1">
+            تمام
+          </button>
+        </div>
+      </div>
+
+    </form>
+
+    <button mat-mini-fab>
+      <mat-icon aria-label="Example icon-button with a heart icon" (click)="addToForm()">add</mat-icon>
+    </button>
+  </mat-expansion-panel>
+</mat-accordion>

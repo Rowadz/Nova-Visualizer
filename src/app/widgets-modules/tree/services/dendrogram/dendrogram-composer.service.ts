@@ -46,7 +46,11 @@ export class DendrogramComposerService {
     );
 
     this.DB.dbName = this.notifier.selectedDB;
-    this.mergeDBDataWithSubject(await this.DB.getAll());
+    this.mergeDBDataWithSubject(
+      (await this.DB.getAll()).filter(
+        ({ cid }: TreeSubejct) => cid.split('-').length !== 5
+      )
+    );
 
     const maing = zoomG
       .append('g')

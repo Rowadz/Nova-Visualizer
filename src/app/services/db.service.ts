@@ -22,7 +22,7 @@ export class DBService {
     return this.DB.get(id);
   }
 
-  getAll(): Promise<Array<TreeSubejct>> {
+  getAll(): Promise<Array<any>> {
     return this.DB.getAll();
   }
 
@@ -30,7 +30,7 @@ export class DBService {
     return this.DB.del(cid);
   }
 
-  getOptionalCount() {
+  getOptionalCount(): Promise<Array<TreeSubejct>> {
     return this.DB.getOptionalCount(
       this.notifierService
         .giveSubject()

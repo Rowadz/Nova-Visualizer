@@ -31,7 +31,14 @@ export class PieService extends ServicesHelper {
     filterType: FilterType = 'nothing'
   ): Promise<Highcharts.Options> {
     this.DB.dbName = this.notifier.selectedDB;
-    const data = [...this.mapDataToPie(await this.DB.getAll(), filterType)];
+    const data = [
+      ...this.mapDataToPie(
+        (await this.DB.getAll()).filter(
+          ({ cid }: TreeSubejct) => cid.split('-').length !== 5
+        ),
+        filterType
+      )
+    ];
     return this.pieChartOption(
       data,
       seriesType,

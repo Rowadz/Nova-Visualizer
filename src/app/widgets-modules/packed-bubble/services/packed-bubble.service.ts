@@ -14,7 +14,9 @@ export class PackedBubbleService {
     this.DB.dbName = this.notifier.selectedDB;
     const data = await this.DB.getAll();
     return this.packedBubbleChartOption(
-      data.map(({ name, mark }: TreeSubejct) => ({ name, value: +mark }))
+      data
+        .filter(({ cid }: TreeSubejct) => cid.split('-').length !== 5)
+        .map(({ name, mark }: TreeSubejct) => ({ name, value: +mark }))
     ) as Highcharts.Options;
   }
 

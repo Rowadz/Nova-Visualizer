@@ -14,11 +14,13 @@ export class ColumnService {
     this.DB.dbName = this.notifier.selectedDB;
     const data = await this.DB.getAll();
     return this.columnChartOption(
-      data.map(({ name, mark }: TreeSubejct) => ({
-        name,
-        y: +mark,
-        drilldown: name
-      }))
+      data
+        .filter(({ cid }: TreeSubejct) => cid.split('-').length !== 5)
+        .map(({ name, mark }: TreeSubejct) => ({
+          name,
+          y: +mark,
+          drilldown: name
+        }))
     ) as Highcharts.Options;
   }
 
