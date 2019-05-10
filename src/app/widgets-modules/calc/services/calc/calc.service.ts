@@ -14,7 +14,10 @@ export class CalcService {
         const node: TreeSubejct = tree.find(
           ({ cid }: TreeSubejct) => ts.cid === cid
         );
-        ts.credit = node.credit;
+        if (node) {
+          ts.credit = node.credit;
+          ts.inTotal = true;
+        }
         return ts;
       })
     );
@@ -23,10 +26,15 @@ export class CalcService {
   calcTotal(data: Array<TreeSubejct>): Marks {
     let credits = 0;
     let total = 0;
+    let subOnDiv = 0;
     data.forEach((ts: TreeSubejct) => {
+      if (ts.inTotal) {
+        total += +ts.credit * +ts.mark;
+      } else {
+        subOnDiv += +ts.credit;
+      }
       credits += +ts.credit;
-      total += +ts.credit * +ts.mark;
     });
-    return { credits, total: total / credits, marks: data };
+    return { credits, total: total / (credits - subOnDiv), marks: data };
   }
 }

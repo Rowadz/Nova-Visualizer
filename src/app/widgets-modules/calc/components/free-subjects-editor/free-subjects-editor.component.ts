@@ -10,6 +10,8 @@ import { TreeSubejct } from 'src/app/config/models/tree-subject.model';
   styleUrls: ['./free-subjects-editor.component.scss']
 })
 export class FreeSubjectsEditorComponent implements OnInit {
+  oldSujbects: Array<TreeSubejct>;
+
   constructor(
     private readonly DB: DBService,
     private readonly notifierService: NotifierService
@@ -17,15 +19,16 @@ export class FreeSubjectsEditorComponent implements OnInit {
 
   async ngOnInit() {
     this.DB.dbName = this.notifierService.selectedDB;
-    console.log(await this.DB.getAll());
+    this.oldSujbects = (await this.DB.getAll()).filter(
+      ({ cid }: TreeSubejct) => cid.split('-').length === 5
+    );
   }
 
   addHours12(arr: Array<Partial<TreeSubejct>>): void {
-    arr.forEach((pts: Partial<TreeSubejct>) => {
-      pts.cid = UUID.UUID();
-      pts.credit = 3;
-      pts.inTotal = !!pts.inTotal;
-      this.DB.save(pts as TreeSubejct);
-    });
+    for (const mark of arr) {
+      mark.credit = 3;
+      mark.inTotal = !!mark.inTotal;
+      this.DB.save(mark as TreeSubejct).then(d => console.log(d));
+    }
   }
 }
