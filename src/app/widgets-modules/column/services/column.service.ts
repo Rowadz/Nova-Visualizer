@@ -1,27 +1,35 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { DBService } from 'src/app/services/db.service';
 import { NotifierService } from 'src/app/services/notifier.service';
 import { TreeSubejct } from 'src/app/config/models/tree-subject.model';
+import { FilterType } from 'src/app/config/models/filter-types.type';
+import { SeriesClickEventObject } from 'highcharts';
 
 @Injectable()
 export class ColumnService {
+  editPoint: EventEmitter<TreeSubejct>;
   constructor(
     private readonly DB: DBService,
     private readonly notifier: NotifierService
-  ) {}
+  ) {
+    this.editPoint = new EventEmitter<TreeSubejct>();
+  }
 
-  async init(): Promise<Highcharts.Options> {
+  async init(filter: FilterType = 'nothing'): Promise<Highcharts.Options> {
     this.DB.dbName = this.notifier.selectedDB;
     const data = await this.DB.getAll();
-    return this.columnChartOption(
-      data
-        .filter(({ cid }: TreeSubejct) => cid.split('-').length !== 5)
-        .map(({ name, mark }: TreeSubejct) => ({
-          name,
-          y: +mark,
-          drilldown: name
-        }))
-    ) as Highcharts.Options;
+    let d = data
+      .filter(({ cid }: TreeSubejct) => cid.split('-').length !== 5)
+      .map((ts: TreeSubejct) => ({
+        name: ts.name,
+        y: +ts.mark,
+        drilldown: ts.name,
+        ...ts
+      }));
+    if (filter === 'Asc') {
+      d = [...d.sort((a, b) => (a.y > b.y ? -1 : 1))];
+    }
+    return this.columnChartOption(d) as Highcharts.Options;
   }
 
   private columnChartOption(
@@ -56,6 +64,12 @@ export class ColumnService {
         enabled: false
       },
       plotOptions: {
+        column: {
+          events: {
+            click: (e: SeriesClickEventObject) =>
+              this.editPoint.emit(e.point.options as TreeSubejct)
+          }
+        },
         series: {
           borderWidth: 0,
           dataLabels: {
@@ -73,9 +87,14 @@ export class ColumnService {
       },
       series: [
         {
+          cursor: 'pointer',
           colorByPoint: true,
           type: 'column',
-          data
+          data,
+          events: {
+            click: (e: SeriesClickEventObject) =>
+              this.editPoint.emit(e.point.options as TreeSubejct)
+          }
         }
       ]
     };

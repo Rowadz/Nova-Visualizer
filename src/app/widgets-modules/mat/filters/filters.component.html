@@ -1,23 +1,26 @@
-<button mat-icon-button [matMenuTriggerFor]="menu">
-  <mat-icon>more_vert</mat-icon>
-</button>
-<mat-menu #menu="matMenu">
-  <button mat-menu-item (click)="filterChange('nothing')">
-    <mat-icon>album</mat-icon>
-    <span>
-      بدون فلتر
-    </span>
+<section class="fixed f-left">
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
   </button>
-  <button mat-menu-item (click)="filterChange('failSucc')">
-    <mat-icon>shuffle</mat-icon>
-    <span>
-      ناجح راسب
-    </span>
-  </button>
-  <button mat-menu-item (click)="filterChange('rating')">
-    <mat-icon>sentiment_very_satisfied</mat-icon>
-    <span>
-      تقدير
-    </span>
-  </button>
-</mat-menu>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="filterChange('nothing')">
+      <mat-icon>album</mat-icon>
+      <span>
+        بدون فلتر
+      </span>
+    </button>
+    <button mat-menu-item (click)="filterChange('failSucc')">
+      <mat-icon>shuffle</mat-icon>
+      <span>
+        ناجح راسب
+      </span>
+    </button>
+    <button mat-menu-item (click)="filterChange('rating')">
+      <mat-icon>sentiment_very_satisfied</mat-icon>
+      <span>
+        تقدير
+      </span>
+    </button>
+  </mat-menu>
+
+</section>

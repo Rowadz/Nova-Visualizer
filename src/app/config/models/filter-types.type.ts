@@ -1,1 +1,1 @@
-export type FilterType = 'nothing' | 'failSucc' | 'rating';
+export type FilterType = 'nothing' | 'failSucc' | 'rating' | 'Asc';

@@ -42,7 +42,9 @@ export class WordcloudComponent implements OnInit {
     const options = JSON.stringify(await this.wordcloudService.init(e));
     this.chartOptions = {
       ...JSON.parse(options),
-      plotOptions: { ...wordcloud }
+      plotOptions: {
+        wordcloud: { ...wordcloud }
+      }
     };
   }
 }

@@ -1,6 +1,5 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { FormArray, FormBuilder, Validators, FormGroup } from '@angular/forms';
-import { MatSnackBar } from '@angular/material';
 import { TreeSubejct } from 'src/app/config/models/tree-subject.model';
 import { UUID } from 'angular2-uuid';
 
@@ -22,10 +21,7 @@ export class Subject12Component implements OnInit {
   get formArray(): FormArray {
     return this.hours12.controls.subjects12 as FormArray;
   }
-  constructor(
-    private readonly fb: FormBuilder,
-    private readonly snackBar: MatSnackBar
-  ) {
+  constructor(private readonly fb: FormBuilder) {
     this.addHours12 = new EventEmitter<Array<Partial<TreeSubejct>>>();
   }
 

@@ -75,6 +75,11 @@ export class WordcloudService extends ServicesHelper {
       },
       series: [
         {
+          cursor: 'pointer',
+          events: {
+            click: (e: SeriesClickEventObject) =>
+              this.editPoint.emit(e.point.options as TreeSubejct)
+          },
           type: 'wordcloud',
           data
         }

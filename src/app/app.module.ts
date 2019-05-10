@@ -11,6 +11,7 @@ import { MainSubjetsComponent } from './components/home/main-subjets/main-subjet
 import { MatCardModule, MatBadgeModule } from '@angular/material';
 import { MainSubjetsCardComponent } from './components/home/main-subjets/main-subjets-card/main-subjets-card.component';
 import { NewThingsComponent } from './components/home/new-things/new-things.component';
+import { NotFound404Component } from './components/not-found404/not-found404.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { NewThingsComponent } from './components/home/new-things/new-things.comp
     HomeComponent,
     MainSubjetsComponent,
     MainSubjetsCardComponent,
-    NewThingsComponent
+    NewThingsComponent,
+    NotFound404Component
   ],
   imports: [
     CommonModule,

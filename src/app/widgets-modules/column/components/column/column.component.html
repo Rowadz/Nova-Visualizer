@@ -1,2 +1,24 @@
+<section class="fixed f-left">
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="changeFilter('nothing')">
+      <mat-icon>album</mat-icon>
+      <span>
+        بدون فلتر
+      </span>
+    </button>
+    <button mat-menu-item (click)="changeFilter('Asc')">
+      <mat-icon>arrow_forward</mat-icon>
+      <span>
+        رتبهم
+      </span>
+    </button>
+  </mat-menu>
+
+</section>
+
+
 <highcharts-chart *ngIf="chartOptions" [Highcharts]="Highcharts" [options]="chartOptions"
   style="width: 100%; height: 100vh; display: block;"></highcharts-chart>

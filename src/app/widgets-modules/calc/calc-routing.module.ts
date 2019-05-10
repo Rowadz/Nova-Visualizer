@@ -9,6 +9,7 @@ const routes: Routes = [
     path: '',
     component: CalcContainerComponent,
     children: [
+      { path: '', redirectTo: 'free-subjects', pathMatch: 'full' },
       { path: 'free-subjects', component: FreeSubjectsEditorComponent },
       { path: 'total', component: CalcComponent }
     ]

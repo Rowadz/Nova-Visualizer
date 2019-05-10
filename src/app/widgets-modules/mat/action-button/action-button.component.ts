@@ -27,8 +27,8 @@ export class ActionButtonComponent implements OnInit {
         { icon: 'school', route: 'tree', color: 'primary' },
         { icon: 'pie_chart', route: 'pie', color: 'primary' },
         { icon: 'translate', route: 'wordcloud', color: 'primary' },
-        { icon: 'signal_cellular_alt', route: 'column', color: 'primary' },
-        { icon: 'scatter_plot', route: 'packed-bubble', color: 'primary' },
+        { icon: 'bar_chart', route: 'column', color: 'primary' },
+        { icon: 'bubble_chart', route: 'packed-bubble', color: 'primary' },
         { icon: 'highlight', route: 'calc', color: 'primary' }
       ];
     } else {
