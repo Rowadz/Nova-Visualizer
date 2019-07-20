@@ -1,17 +1,28 @@
 # Nova Visualizer 🖌️ 🎨
 
-A Visualization tool built for the **IT** Students at Philadelphia University (jordan).
+A Visualization tool built for the **IT** Students at Philadelphia University ( Jordan ).
 
 **You Can play with it [here](https://mohammedal-rowad.github.io/Nova-Visualizer/)**
 
-> I was trying to understand [D3.js](https://d3js.org), [Highcharts](https://www.highcharts.com) & [IndexDB](https://developer.mozilla.org/en/docs/Web/API/IndexedDB_API).
+> I was trying to understand [<img src="assets/d3.png" width="20" height="20"> D3.js](https://d3js.org), [<img src="assets/highcharts.png" width="20" height="20"> Highcharts](https://www.highcharts.com) & [IndexDB](https://developer.mozilla.org/en/docs/Web/API/IndexedDB_API).
 > So I created this tool.
-> with the help of Angular 💓 & Angular material 💓.
+> with the help of [<img src="assets/angular.png" width="20" height="20"> Angular](https://angular.io/) & [Angular material](https://material.angular.io/).
 
 - Demo Video [here](https://www.youtube.com/watch?v=9y50KR18eU4)
 - _You can make your own version, just clone the dist branch_
 
-### IMAGES :
+# How to install
+```console
+$ https://github.com/MohammedAl-Rowad/Nova-Visualizer.git
+$ cd Nova-Visualizer
+$ git checkout dist # the actual code is in this branch.
+$ npm i
+$ ng s # for serving & developing locally, go to http://localhost:4200.com.
+$ ng s --port=5402 # for changing the default port which is 4200.
+$ ng b --prod # for building the project
+```
+
+# IMAGES :
 
 - home page 1:
   ![](assets/1.png)
