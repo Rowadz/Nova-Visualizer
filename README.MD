@@ -17,7 +17,7 @@ $ git clone https://github.com/MohammedAl-Rowad/Nova-Visualizer.git
 $ cd Nova-Visualizer
 $ git checkout dist # the actual code is in this branch.
 $ npm i
-$ ng s # for serving & developing locally, go to http://localhost:4200.com.
+$ ng s # for serving & developing locally, go to http://localhost:4200
 $ ng s --port=5402 # for changing the default port which is 4200.
 $ ng b --prod # for building the project
 ```
