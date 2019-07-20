@@ -13,7 +13,7 @@ A Visualization tool built for the **IT** Students at Philadelphia University ( 
 
 # How to install
 ```console
-$ https://github.com/MohammedAl-Rowad/Nova-Visualizer.git
+$ git clone https://github.com/MohammedAl-Rowad/Nova-Visualizer.git
 $ cd Nova-Visualizer
 $ git checkout dist # the actual code is in this branch.
 $ npm i
