@@ -8,4 +8,5 @@ export interface TreeSubejct {
   mark?: number;
   credit?: number;
   inTotal?: boolean;
+  [key: string]: any;
 }

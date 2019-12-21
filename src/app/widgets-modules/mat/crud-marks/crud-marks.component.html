@@ -1,13 +1,15 @@
-<h3 dir='rtl' class="text-right">
+<h3 dir="rtl" class="text-right">
   خيارات بخصوص مادة
-  {{  data.name }}
+  {{ data.name }}
 </h3>
-<mat-list dir='rtl'>
+<mat-list dir="rtl">
   <mat-list-item matRipple (click)="openMarkEditor()">
-    تعديل
+    <mat-icon mat-list-icon>edit</mat-icon>
+    <p mat-line class="text-right">تعديل</p>
   </mat-list-item>
   <mat-divider></mat-divider>
   <mat-list-item (click)="close()" matRipple>
-    كنت بجرب بس
+    <mat-icon mat-list-icon>cancel</mat-icon>
+    <p mat-line class="text-right">إخفــاء</p>
   </mat-list-item>
 </mat-list>

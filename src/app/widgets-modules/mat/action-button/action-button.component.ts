@@ -24,6 +24,7 @@ export class ActionButtonComponent implements OnInit {
     if (this.type === 'navigate1') {
       this.fabButtons = [
         { icon: 'edit', route: '', color: 'accent' },
+        { icon: 'device_hub', route: 'org', color: 'primary' },
         { icon: 'school', route: 'tree', color: 'primary' },
         { icon: 'pie_chart', route: 'pie', color: 'primary' },
         { icon: 'translate', route: 'wordcloud', color: 'primary' },

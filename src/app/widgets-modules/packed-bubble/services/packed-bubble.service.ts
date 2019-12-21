@@ -42,7 +42,6 @@ export class PackedBubbleService {
       tooltip: {
         useHTML: true,
         formatter: function() {
-          console.log();
           return `
             <span style="color:${this.color};">\u25CF</span> <b>
             ${this.key}

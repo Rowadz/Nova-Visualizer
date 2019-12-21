@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterConf } from './config/models/router-conf.model';
 import * as Highcharts from 'highcharts';
-require('highcharts/themes/sand-signika')(Highcharts);
+require('highcharts/themes/dark-unica')(Highcharts);
 
 @Component({
   selector: 'app-root',

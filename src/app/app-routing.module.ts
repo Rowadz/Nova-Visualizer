@@ -13,6 +13,10 @@ const routes: Routes = [
     loadChildren: './widgets-modules/tree/tree.module#TreeModule'
   },
   {
+    path: 'org',
+    loadChildren: () => import('./widgets-modules/org/org.module').then(({OrgModule}) => OrgModule)
+  },
+  {
     path: 'pie',
     loadChildren: './widgets-modules/pie/pie.module#PieModule'
   },
